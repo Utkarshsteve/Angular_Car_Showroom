@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-car-card',
@@ -7,12 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarCardComponent implements OnInit {
 
-  Car: any = {
-    "Id":1,
-    "Name":"Lamborghini Urus",
-    "Type":"SUV",
-    "Price":1200
-  }
+  @Input() car: any
+
+    
 
   constructor() { }
 
