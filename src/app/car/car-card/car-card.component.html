@@ -1,5 +1,15 @@
 <div class="card">
-    <img class="PropImg" src="assets/images/demo_image.jpg">
+    <div class="card-img-wrapper">
+        <img class="card-img-top" src="assets/images/demo_image.jpg">
+        <ul class="list-inline text-center member-icons animate" >
+            <li class="list-inline-item">
+                <button class="btn btn-dark"><i class="fas fa-info"></i></button>
+            </li>
+            <li class="list-inline-item">
+                <button class="btn btn-dark"><i class="fas fa-mobile-alt"></i></button>
+            </li>
+        </ul>
+    </div>
     <div class="card-body p-2">
         <h1>{{car.Name}}</h1>
         <h2>{{car.Type}}</h2>
