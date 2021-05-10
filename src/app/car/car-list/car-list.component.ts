@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { SportscarsService } from 'src/services/sportscars.service';
 import { ICar } from '../icar';
 
@@ -8,13 +9,17 @@ import { ICar } from '../icar';
   styleUrls: ['./car-list.component.css']
 })
 export class CarListComponent implements OnInit {
+  
+  SellRent = 1;
+  Cars: ICar[];
 
-  Cars: Array<ICar>;
-
-  constructor(private service: SportscarsService) { }
+  constructor(private route: ActivatedRoute , private service: SportscarsService) { }
 
   ngOnInit(): void {
-    this.service.getAllCars().subscribe(
+    if (this.route.snapshot.url.toString()) {
+      this.SellRent = 2; //Means we are on rent-car URL else base url
+    }
+    this.service.getAllCars(this.SellRent).subscribe(
       data => {
         this.Cars = data;
         console.log(data);

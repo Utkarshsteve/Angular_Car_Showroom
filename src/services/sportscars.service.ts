@@ -12,12 +12,12 @@ export class SportscarsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllCars(): Observable<ICar[]> {
+  getAllCars(SellRent: number): Observable<ICar[]> {
     return this.httpClient.get('data/cars.json').pipe(
       map(data => {
         const carsArray: Array<ICar> = [];
         for (const id in data) {
-          if (data.hasOwnProperty(id)) {
+          if (data.hasOwnProperty(id) && data[id].SellRent === SellRent) {
             carsArray.push(data[id]);
           }
         }
