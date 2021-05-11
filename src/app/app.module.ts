@@ -15,6 +15,7 @@ import { CarDetailComponent } from './car/car-detail/car-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
 import { UserServiceService } from 'src/services/user-service.service';
+import { AlertifyService } from 'src/services/alertify.service';
 
 const appRoutes: Routes = [
   
@@ -49,7 +50,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     SportscarsService,
-    UserServiceService
+    UserServiceService,
+    AlertifyService
   ],
   bootstrap: [AppComponent]
 })
