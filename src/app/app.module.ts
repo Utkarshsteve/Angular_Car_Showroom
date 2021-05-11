@@ -14,6 +14,7 @@ import { AddCarComponent } from './car/add-car/add-car.component';
 import { CarDetailComponent } from './car/car-detail/car-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
+import { UserServiceService } from 'src/services/user-service.service';
 
 const appRoutes: Routes = [
   
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    SportscarsService
+    SportscarsService,
+    UserServiceService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,8 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUser } from 'src/model/user';
+import { UserServiceService } from 'src/services/user-service.service';
 
 @Component({
   selector: 'app-user-register',
@@ -9,22 +12,57 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class UserRegisterComponent implements OnInit {
 
   registrationForm: FormGroup;
-  constructor() { }
+  user: IUser;
+  userSubmitted: boolean;
+  constructor(private fb: FormBuilder, private userService: UserServiceService) { }
 
   ngOnInit(): void {
-    this.registrationForm = new FormGroup({
+    /* this.registrationForm = new FormGroup({
       userName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl(null, [Validators.required]),
       mobile: new FormControl(null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-    }, this.passwordValidator);
+    }, this.passwordValidator); */
+    this.createRegistrationForm();
   }
 
-  passwordValidator(fg: FormGroup) : Validators {
-    return fg.get('password').value === fg.get('confirmPassword').value ? null:
-    {notmatched:true};
+  createRegistrationForm() {
+    this.registrationForm = this.fb.group({
+      userName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [null, [Validators.required]],
+      mobile: [null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]
+    }, { Validators: this.passwordValidator });
   }
+
+  passwordValidator(fg: FormGroup): Validators {
+    return fg.get('password').value === fg.get('confirmPassword').value ? null :
+      { notmatched: true };
+  }
+
+
+  onSubmit() {
+    console.log(this.registrationForm);
+    this.userSubmitted = true;
+    if (this.registrationForm.valid) {
+      //this.user = Object.assign(this.user, this.registrationForm.value);
+      this.userService.addUser(this.userData());
+      this.registrationForm.reset();
+      this.userSubmitted = false;
+
+  }
+}
+
+userData(): IUser {
+  return this.user = {
+    userName: this.userName.value,
+    email: this.email.value,
+    password: this.password.value,
+    mobile: this.mobile.value
+  }
+}
 
   //getter methods for form controls
   get userName() {
@@ -46,9 +84,4 @@ export class UserRegisterComponent implements OnInit {
   get mobile() {
     return this.registrationForm.get('mobile') as FormControl;
   }
-
-  onSubmit(){
-    console.log(this.registrationForm);
-  }
-
 }
